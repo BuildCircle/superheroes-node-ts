@@ -7,7 +7,5 @@ it('battle should return the hero when API is called', async () => {
 })
 
 it('battle should throw error when character not found', async () => {
-  const result = await battle("Random", 'Joker');
-
-  expect(result).toEqual({name: "Batman", score: 8.3, type: "hero", weakness: "Joker"});
+  await expect(battle("Random", "Joker")).rejects.toThrow("Character not found. Try again with another name.");
 })
