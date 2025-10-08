@@ -1,10 +1,25 @@
-import { getCharacters, Character } from './getCharacters'
+import {Character, getCharacters} from "./getCharacters";
 
-export function battle(heroName: string, villainName: string): Character {
+type CharacterQuery = {
+  name: string
+  type: string
+}
+
+export function battle(hero: CharacterQuery, villain: CharacterQuery): Character {
+  const heroCharacter = findCharacter(hero.name, hero.type)
+  const villainCharacter = findCharacter(villain.name, villain.type)
+
+  return heroCharacter!.score >= villainCharacter!.score ? heroCharacter! : villainCharacter!
+}
+
+function findCharacter(name: string, type: string) {
   const characters = getCharacters()
 
-  const hero = characters.items.find(e => e.name === heroName)
-  const villain = characters.items.find(e => e.name === villainName)
-
-  return hero!.score >= villain!.score ? hero! : villain!
+  let character
+  for (let i = 0; i < characters.items.length; i++) {
+    if (characters.items[i].name === name && characters.items[i].type === type) {
+      character = characters.items[i]
+    }
+  }
+  return character
 }
